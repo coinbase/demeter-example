@@ -1,0 +1,15 @@
+public_staging_cidr_blocks:
+- 0.0.0.0/0
+private_staging_cidr_blocks:
+- 0.0.0.0/0
+
+public_production_cidr_blocks:
+- 0.0.0.0/0
+private_production_cidr_blocks:
+- 0.0.0.0/0
+
+public_office_cidr_blocks:
+- 0.0.0.0/0
+private_office_cidr_blocks:
+- 0.0.0.0/0
+

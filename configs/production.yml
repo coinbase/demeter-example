@@ -1,0 +1,18 @@
+# Environment specific security groups
+environments:
+- priduction
+security_groups: 
+- name: ec2::ssh
+  vpc_id: <% env.vpc_id %>
+  ingress:
+  - protocol: tcp
+    from_port: 2222
+    to_port: 2222
+    cidr_blocks:
+    - 10.0.0.0/8
+  egress:
+  - protocol: -1
+    from_port: 0
+    to_port: 0
+    cidr_blocks:
+    - 0.0.0.0/0

@@ -1,0 +1,24 @@
+vpc_id: vpc-xxxxxxxx
+vpc_cidr: 10.10.0.0/16
+
+public_subnet_cidrs:
+  - 10.10.0.0/24
+  - 10.10.1.0/24
+  - 10.10.2.0/24
+private_subnet_cidrs:
+  - 10.10.10.0/24
+  - 10.10.11.0/24
+  - 10.10.12.0/24
+
+elb_inbound_traffic_cidr_blocks:
+  - 10.0.0.0/8
+elb_inbound_traffic_source_security_groups: []
+
+ec2_outbound_traffic_cidr_blocks:
+  - 0.0.0.0/0
+ec2_outbound_traffic_source_security_groups: []
+
+ssh_source_security_groups:
+  - <% security_group.ec2_infra_bastion.id %>
+ssh_cidr_blocks:
+  - 10.0.0.0/8

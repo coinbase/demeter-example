@@ -1,0 +1,22 @@
+environments:
+- production
+security_groups:
+- name: ec2::infra/bastion
+  vpc_id: <% env.vpc_id %>
+  ingress:
+  - protocol: tcp
+    from_port: 22
+    to_port: 22
+    cidr_blocks:
+    - <% global.private_office_cidr_blocks %>
+  - protocol: icmp
+    from_port: -1
+    to_port: -1
+    cidr_blocks:
+    - 0.0.0.0/0
+  egress:
+  - protocol: -1
+    from_port: 0
+    to_port: 0
+    cidr_blocks:
+    - 0.0.0.0/0

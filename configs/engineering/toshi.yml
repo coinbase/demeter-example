@@ -1,0 +1,70 @@
+---
+environments:
+- staging
+- production
+security_groups:
+- name: elb::engineering/toshi
+  vpc_id: <% env.vpc_id %>
+  ingress:
+  - protocol: tcp
+    from_port: 443
+    to_port: 443
+    cidr_blocks:
+    - 0.0.0.0/0
+  egress:
+  - protocol: -1
+    from_port: 0
+    to_port: 0
+    cidr_blocks:
+    - 0.0.0.0/0
+- name: ec2::engineering/toshi
+  vpc_id: <% env.vpc_id %>
+  ingress:
+  - protocol: tcp
+    from_port: 22
+    to_port: 22
+    source_security_groups:
+    - <% env.ssh_source_security_groups %>
+    cidr_blocks:
+    - <% env.ssh_cidr_blocks %>
+  - protocol: tcp
+    from_port: 5000
+    to_port: 5000
+    source_security_groups:
+    - <% security_group.elb_engineering_toshi.id %>
+  egress:
+  - protocol: -1
+    from_port: 0
+    to_port: 0
+    cidr_blocks:
+    - 0.0.0.0/0
+- name: rds::engineering/toshi
+  vpc_id: <% env.vpc_id %>
+  ingress:
+  - protocol: tcp
+    from_port: 5432
+    to_port: 5432
+    source_security_groups:
+    - <% security_group.ec2_engineering_toshi.id %>
+    - <% security_group.ec2_infra_bastion.id %>
+  egress:
+  - protocol: -1
+    from_port: 0
+    to_port: 0
+    cidr_blocks:
+    - 0.0.0.0/0
+- name: redis::engineering/toshi
+  vpc_id: <% env.vpc_id %>
+  ingress:
+  - protocol: tcp
+    from_port: 6379
+    to_port: 6379
+    source_security_groups:
+    - <% security_group.ec2_engineering_toshi.id %>
+    - <% security_group.ec2_infra_bastion.id %>
+  egress:
+  - protocol: -1
+    from_port: 0
+    to_port: 0
+    cidr_blocks:
+    - 0.0.0.0/0

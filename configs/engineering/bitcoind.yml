@@ -1,0 +1,35 @@
+---
+environments:
+- staging
+- production
+security_groups:
+- name: ec2::engineering/bitcoind
+  vpc_id: <% env.vpc_id %>
+  ingress:
+  - protocol: tcp
+    from_port: 18333
+    to_port: 18333
+    cidr_blocks:
+    - <% global.public_staging_cidr_blocks %>
+    - <% global.public_production_cidr_blocks %>
+    - <% global.public_office_cidr_blocks %>
+  - protocol: tcp
+    from_port: 8333
+    to_port: 8333
+    cidr_blocks:
+    - <% global.public_staging_cidr_blocks %>
+    - <% global.public_production_cidr_blocks %>
+    - <% global.public_office_cidr_blocks %>
+  - protocol: tcp
+    from_port: 22
+    to_port: 22
+    source_security_groups:
+    - <% env.ssh_source_security_groups %>
+    cidr_blocks:
+    - <% env.ssh_cidr_blocks %>
+  egress:
+  - protocol: -1
+    from_port: 0
+    to_port: 0
+    cidr_blocks:
+    - 0.0.0.0/0
