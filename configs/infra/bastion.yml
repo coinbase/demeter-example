@@ -1,5 +1,6 @@
 environments:
 - production
+- staging
 security_groups:
 - name: ec2::infra/bastion
   vpc_id: <% env.vpc_id %>
