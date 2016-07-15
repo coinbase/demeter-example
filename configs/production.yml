@@ -1,6 +1,6 @@
 # Environment specific security groups
 environments:
-- priduction
+- production
 security_groups: 
 - name: ec2::ssh
   vpc_id: <% env.vpc_id %>
